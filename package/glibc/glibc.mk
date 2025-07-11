@@ -18,7 +18,8 @@ else
 #   git describe --match 'glibc-*' --abbrev=40 origin/release/MAJOR.MINOR/master | cut -d '-' -f 2-
 # When updating the version, please also update localedef
 #GLIBC_VERSION = 2.35-134-gb6aade18a7e5719c942aa2da6cf3157aca993fa4
-GLIBC_VERSION = cdc8fbf6196d9f98d9f081ba09902ad2c1b5f16f
+#GLIBC_VERSION = cdc8fbf6196d9f98d9f081ba09902ad2c1b5f16f
+GLIBC_VERSION = 2.35
 
 # Upstream doesn't officially provide an https download link.
 # There is one (https://sourceware.org/git/glibc.git) but it's not reliable,
@@ -26,7 +27,8 @@ GLIBC_VERSION = cdc8fbf6196d9f98d9f081ba09902ad2c1b5f16f
 # When updating the version, check it on the official repository;
 # *NEVER* decide on a version string by looking at the mirror.
 # Then check that the mirror has been synced already (happens once a day.)
-GLIBC_SITE = $(call github,openlgtv,glibc,$(GLIBC_VERSION))
+# GLIBC_SITE = $(call github,openlgtv,glibc,$(GLIBC_VERSION))
+GLIBC_SITE = $(call github,bminor,glibc,$(GLIBC_VERSION))
 endif
 
 #BR_NO_CHECK_HASH_FOR += $(GLIBC_SOURCE)
