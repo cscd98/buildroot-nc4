@@ -1,0 +1,36 @@
+--- a/src/pbnjson_c/validation/CMakeLists.txt
++++ b/src/pbnjson_c/validation/CMakeLists.txt
+@@ -22,15 +22,13 @@
+ 	)
+ 
+ add_custom_command(
+-	SOURCE json_schema_grammar.y
++	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/json_schema_grammar.c
++	        ${CMAKE_CURRENT_BINARY_DIR}/json_schema_grammar.h
+ 	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/apply_lemon.sh
+ 		${LEMON}
+ 		${CMAKE_CURRENT_BINARY_DIR}
+ 		${CMAKE_CURRENT_SOURCE_DIR}
+ 		json_schema_grammar.y
+-	TARGET json_schema_grammar
+-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/json_schema_grammar.c
+-	        ${CMAKE_CURRENT_BINARY_DIR}/json_schema_grammar.h
+ 	DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/json_schema_grammar.y
+ 	        ${CMAKE_CURRENT_SOURCE_DIR}/apply_lemon.sh
+ 	)
+@@ -48,12 +46,10 @@
+ function(gperf_generate source target)
+ 	set_source_files_properties(${target} GENERATED)
+ 	add_custom_command(
+-		SOURCE ${source}
+-		TARGET ${target}
+-		COMMAND ${GPERF} -t ${CMAKE_CURRENT_SOURCE_DIR}/${source} > ${target}
+-		OUTPUTS ${target}
++		OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${target}
++		COMMAND ${GPERF} -t ${CMAKE_CURRENT_SOURCE_DIR}/${source} > ${CMAKE_CURRENT_BINARY_DIR}/${target}
+ 		DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${source}
+-		)
++	)
+ endfunction()
+ 
+ gperf_generate(schema_keywords.gperf schema_keywords.h)

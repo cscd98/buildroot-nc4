@@ -40,4 +40,9 @@ else
 LTTNG_LIBUST_CONF_OPTS += --disable-numa
 endif
 
+# lgtv: lttng-libust does not support static linking
+ifeq ($(BR2_SHARED_STATIC_LIBS),y)
+LTTNG_LIBUST_CONF_OPTS += --disable-static
+endif
+
 $(eval $(autotools-package))

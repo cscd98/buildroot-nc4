@@ -1,0 +1,39 @@
+--- a/webOS/webOS.cmake	2026-04-19 22:06:39.427238953 +0100
++++ b/webOS/webOS.cmake	2026-04-19 22:06:45.774391192 +0100
+@@ -837,27 +837,28 @@
+ 	# If <target-name> begins with "lib", then the library name would begin with "liblib" unless its fixed, which is done here.
+ 	# NB. Can't just get the LIBRARY_OUTPUT_NAME properity, because it doesn't exist unless it's been assigned to (it doesn't
+ 	#     have a default value).
+-	get_target_property(location ${webos_library_TARGET} LOCATION)
+-	string(REGEX MATCH "[^/]+$" libname ${location})
+-	string(SUBSTRING ${libname} 0 6 libnameprefix)
+-	if(${libnameprefix} STREQUAL liblib)
+-		# ASSERT(PREFIX is "lib")
++	get_target_property(target_name ${webos_library_TARGET} NAME)
++	# Extract prefix from target name instead of filename
++	string(SUBSTRING ${target_name} 0 6 libnameprefix)
++	if("${libnameprefix}" STREQUAL "liblib")
++		# CMake already adds "lib" prefix automatically
+ 		set_target_properties(${webos_library_TARGET} PROPERTIES PREFIX "")
+ 	endif()
+ 
+ 	# Why can't install() figure this out without needing to be told?
+ 	if(UNIX)
+-		if(${location} MATCHES "\\.a$")
++		get_target_property(target_type ${webos_library_TARGET} TYPE)
++		if(target_type STREQUAL "STATIC_LIBRARY")
+ 			set(kind ARCHIVE)
+ 			# Allow static libraries to be linked into shared ones. Without -fPIC, you can get this errors such as:
+ 			#   libXXX.a(YYY.o): relocation R_ARM_MOVW_ABS_NC against `a local symbol' can not be used when making a
+ 			#                    shared object; recompile with -fPIC
+ 			# Technically, it's not needed for x86, but supplying it does no harm.
+ 			set_target_properties(${webos_library_TARGET} PROPERTIES COMPILE_FLAGS -fPIC)
+-		elseif(${location} MATCHES "\\.so$")
++		elseif(target_type STREQUAL "SHARED_LIBRARY")
+ 			set(kind LIBRARY)
+ 		else()
+-			message(FATAL_ERROR "webos_build_library(): Unrecognized library suffix: ${location}")
++			message(FATAL_ERROR "webos_build_library(): Unsupported target type: ${target_type}")
+ 		endif()
+ 	else()
+ 		message(FATAL_ERROR "INTERNAL ERROR: webos_build_library() needs work for non-UNIX builds.")

@@ -1,0 +1,29 @@
+--- a/CMakeLists.txt	2026-04-19 21:46:02.649411978 +0100
++++ b/CMakeLists.txt	2026-04-19 21:46:04.317441747 +0100
+@@ -18,7 +18,7 @@
+ # PmLogLib/CMakeLists.txt
+ #
+ 
+-cmake_minimum_required (VERSION 2.8.7)
++cmake_minimum_required (VERSION 3.5.0)
+ 
+ if(BUILD_PRIVATE)
+ 	project(PmLogLib NONE)
+@@ -43,7 +43,7 @@
+ # To enable this option run "cmake -D BUILD_PRIVATE=ON"
+ if(BUILD_PRIVATE)
+ 	webos_build_pkgconfig(files/pkgconfig/PmLogLib-private)
+-	install(DIRECTORY "include/private/" DESTINATION @WEBOS_INSTALL_INCLUDEDIR@ FILES_MATCHING PATTERN "*.h" PATTERN ".*" EXCLUDE)
++	install(DIRECTORY "include/private/" DESTINATION ${WEBOS_INSTALL_INCLUDEDIR} FILES_MATCHING PATTERN "*.h" PATTERN ".*" EXCLUDE)
+ 	return()
+ endif()
+ 
+@@ -54,7 +54,7 @@
+ if(NOT BUILD_WITHOUT_HEADERS)
+ 	webos_build_pkgconfig(files/pkgconfig/PmLogLib-headers)
+ 	webos_configure_header_files(include/public INSTALL)
+-	install(DIRECTORY "include/public/" DESTINATION @WEBOS_INSTALL_INCLUDEDIR@ FILES_MATCHING PATTERN "*.h" PATTERN ".*" EXCLUDE)
++	install(DIRECTORY "include/public/" DESTINATION ${WEBOS_INSTALL_INCLUDEDIR} FILES_MATCHING PATTERN "*.h" PATTERN ".*" EXCLUDE)
+ 	if(SHIP_HEADERS_ONLY)
+ 		return()
+ 	endif()

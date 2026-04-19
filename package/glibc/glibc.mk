@@ -4,25 +4,19 @@
 #
 ################################################################################
 
-ifeq ($(BR2_arc),y)
-GLIBC_VERSION =  arc-2020.03-release
-GLIBC_SITE = $(call github,foss-for-synopsys-dwc-arc-processors,glibc,$(GLIBC_VERSION))
-else ifeq ($(BR2_RISCV_32),y)
-GLIBC_VERSION = 06983fe52cfe8e4779035c27e8cc5d2caab31531
-GLIBC_SITE = $(call github,riscv,riscv-glibc,$(GLIBC_VERSION))
-else ifeq ($(BR2_csky),y)
-GLIBC_VERSION = 7630ed2fa60caea98f500e4a7a51b88f9bf1e176
-GLIBC_SITE = $(call github,c-sky,glibc,$(GLIBC_VERSION))
-else
 # Generate version string using:
 #   git describe --match 'glibc-*' --abbrev=40 origin/release/MAJOR.MINOR/master | cut -d '-' -f 2-
 # When updating the version, please also update localedef
-GLIBC_VERSION = 2.42-51-gcbf39c26b25801e9bc88499b4fd361ac172d4125
-GLIBC_SITE = https://sourceware.org/git/glibc.git
-GLIBC_SITE_METHOD = git
+#GLIBC_VERSION = 2.42-51-gcbf39c26b25801e9bc88499b4fd361ac172d4125
+GLIBC_VERSION = fe819f0414e6385206dc8682c20d681ee0eb5998
+#GLIBC_SITE_METHOD = git
+
+#GLIBC_SITE = https://sourceware.org/git/glibc.git
+GLIBC_SITE = $(call github,openlgtv,glibc,$(GLIBC_VERSION))
 
 GLIBC_LICENSE = GPL-2.0+ (programs), LGPL-2.1+, BSD-3-Clause, MIT (library)
 GLIBC_LICENSE_FILES = COPYING COPYING.LIB LICENSES
+GLIBC_CPE_ID_VENDOR = gnu
 
 # Extract the base version (e.g. 2.38) from GLIBC_VERSION in order to
 # allow proper matching with the CPE database.
@@ -56,6 +50,8 @@ GLIBC_DEPENDENCIES = host-gcc-initial linux-headers host-bison host-gawk \
 GLIBC_SUBDIR = build
 
 GLIBC_INSTALL_STAGING = YES
+
+GLIBC_INSTALL_STAGING_OPTS = install_root=$(STAGING_DIR) install
 
 # Thumb build is broken, build in ARM mode
 ifeq ($(BR2_ARM_INSTRUCTIONS_THUMB),y)

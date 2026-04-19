@@ -1,0 +1,21 @@
+--- a/src/ums_connector/CMakeLists.txt	2026-04-20 08:45:49.208350690 +0100
++++ b/src/ums_connector/CMakeLists.txt	2026-04-20 08:48:19.670735268 +0100
+@@ -34,8 +34,7 @@
+                       ${GLIB2_LDFLAGS}
+                       ${LUNASERVICE_LDFLAGS}
+                       ${LIBPBNJSON_LDFLAGS}
+-                      ${PMLOGLIB_LDFLAGS}
+-                      ums_connector_impl)
++                      ${PMLOGLIB_LDFLAGS})
+ webos_build_library(NAME ${LIB_IMPL_NAME})
+ 
+ # Interface library
+@@ -48,7 +47,7 @@
+                       ${LUNASERVICE_LDFLAGS}
+                       ${LIBPBNJSON_LDFLAGS}
+                       ${PMLOGLIB_LDFLAGS}
+-                      ums_connector_impl)
++                      ${LIB_IMPL_NAME})
+ webos_build_library(NAME ${LIB_NAME})
+ 
+ # Wrapper

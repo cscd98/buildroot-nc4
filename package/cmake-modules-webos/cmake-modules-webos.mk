@@ -12,6 +12,7 @@ CMAKE_MODULES_WEBOS_INSTALL_STAGING = YES
 
 # this is relative to the CMake install prefix, aka $(STAGING_DIR)
 CMAKE_MODULES_WEBOS_CONF_OPTS += \
-	-DWEBOS_INSTALL_ROOT=/usr/local/webos
+	-DWEBOS_INSTALL_ROOT=/usr/local/webos \
+	-DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
 $(eval $(cmake-package))
