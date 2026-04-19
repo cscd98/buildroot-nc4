@@ -17,6 +17,8 @@ To fix this, add -S PREFIX='$(INSTALL_ROOT)/usr' to apxs call in configure
 Signed-off-by: Fabrice Fontaine <fabrice.fontaine@orange.com>
 Signed-off-by: Adam Duskett <aduskett@gmail.com>
 [aduskett@gmail.com: Update for 8.0.7]
+Signed-off-by: Bernd Kuhls <bernd@kuhls.net>
+[Bernd: rebased for 8.4.13]
 ---
  sapi/apache2handler/config.m4 | 3 +++
  1 file changed, 3 insertions(+)
@@ -25,7 +27,7 @@ diff --git a/sapi/apache2handler/config.m4 b/sapi/apache2handler/config.m4
 index e335721f..aeef2e35 100644
 --- a/sapi/apache2handler/config.m4
 +++ b/sapi/apache2handler/config.m4
-@@ -68,10 +68,12 @@ if test "$PHP_APXS2" != "no"; then
+@@ -68,10 +68,12 @@
    AS_VERSION_COMPARE([$APACHE_VERSION], [2.4.0],
      [AC_MSG_ERROR([Please note that Apache version >= 2.4 is required])])
  

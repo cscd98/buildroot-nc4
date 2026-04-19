@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-GST1_PLUGINS_BAD_VERSION = 1.24.11
+GST1_PLUGINS_BAD_VERSION = 1.24.13
 GST1_PLUGINS_BAD_SOURCE = gst-plugins-bad-$(GST1_PLUGINS_BAD_VERSION).tar.xz
 GST1_PLUGINS_BAD_SITE = https://gstreamer.freedesktop.org/src/gst-plugins-bad
 GST1_PLUGINS_BAD_INSTALL_STAGING = YES
@@ -62,6 +62,7 @@ GST1_PLUGINS_BAD_CONF_OPTS += \
 	-Dmicrodns=disabled \
 	-Dlibde265=disabled \
 	-Dmodplug=disabled \
+	-Dmusepack=disabled \
 	-Dmplex=disabled \
 	-Donnx=disabled \
 	-Dopenexr=disabled \
@@ -646,13 +647,6 @@ GST1_PLUGINS_BAD_DEPENDENCIES += libmpeg2 mjpegtools
 GST1_PLUGINS_BAD_HAS_GPL_LICENSE = y
 else
 GST1_PLUGINS_BAD_CONF_OPTS += -Dmpeg2enc=disabled
-endif
-
-ifeq ($(BR2_PACKAGE_GST1_PLUGINS_BAD_PLUGIN_MUSEPACK),y)
-GST1_PLUGINS_BAD_CONF_OPTS += -Dmusepack=enabled
-GST1_PLUGINS_BAD_DEPENDENCIES += musepack
-else
-GST1_PLUGINS_BAD_CONF_OPTS += -Dmusepack=disabled
 endif
 
 ifeq ($(BR2_PACKAGE_GST1_PLUGINS_BAD_PLUGIN_NEON),y)
