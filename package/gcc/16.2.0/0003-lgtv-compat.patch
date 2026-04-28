@@ -8,7 +8,7 @@ index c5064dd37..90db0cf74 100644
  esac
 +
 +case ${target} in
-+*-webos-*|*-lgtv-*)
++arm*-webos-*|arm*-lgtv-*)
 +	tm_file="${tm_file} linux-webos.h"
 +	extra_options="${extra_options} linux-webos.opt"
 +	;;

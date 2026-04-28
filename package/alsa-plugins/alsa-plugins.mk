@@ -39,4 +39,10 @@ else
 ALSA_PLUGINS_CONF_OPTS += --disable-samplerate
 endif
 
+ifeq ($(BR2_PACKAGE_WEBOS),y)
+ifeq ($(BR2_aarch64),y)
+ALSA_PLUGINS_INSTALL_STAGING = YES
+endif
+endif
+
 $(eval $(autotools-package))
