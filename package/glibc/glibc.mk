@@ -14,6 +14,13 @@ GLIBC_VERSION = fe819f0414e6385206dc8682c20d681ee0eb5998
 GLIBC_SITE = $(call github,openlgtv,glibc,$(GLIBC_VERSION))
 #GLIBC_SITE_METHOD = git
 
+ifeq ($(BR2_aarch64),y)
+# 2.39 is used in /usr/lib64/libc.so.6 on webOS 11
+GLIBC_VERSION = 2.39
+GLIBC_SITE_METHOD = wget
+GLIBC_SITE = https://ftp.gnu.org/gnu/glibc
+endif
+
 GLIBC_LICENSE = GPL-2.0+ (programs), LGPL-2.1+, BSD-3-Clause, MIT (library)
 GLIBC_LICENSE_FILES = COPYING COPYING.LIB LICENSES
 GLIBC_CPE_ID_VENDOR = gnu
@@ -111,8 +118,10 @@ GLIBC_CONF_ENV = \
 
 # Don't use webOS compatibility hacks
 ifeq ($(BR2_PACKAGE_LGTV),y)
+ifeq ($(BR2_arm),y)
 # Ugly hack to modify CC (because CFLAGS isn't used everywhere we need)
 GLIBC_CONF_ENV += CC="$(TARGET_CC) -tno-lgtv-compat"
+endif
 endif
 
 # POSIX shell does not support localization, so remove the corresponding
@@ -140,7 +149,12 @@ GLIBC_MAKE = $(BR2_MAKE)
 GLIBC_CONF_ENV += ac_cv_prog_MAKE="$(BR2_MAKE)"
 
 ifeq ($(BR2_PACKAGE_GLIBC_KERNEL_COMPAT),)
+ifeq ($(BR2_PACKAGE_WEBOS)$(BR2_aarch64),yy)
+# webOS - set enable-kernel to 4.4.84, otherwise buildroot defaults to 2.6 with a custom kernel
+GLIBC_CONF_OPTS += --enable-kernel=4.4.84
+else
 GLIBC_CONF_OPTS += --enable-kernel=$(call qstrip,$(BR2_TOOLCHAIN_HEADERS_AT_LEAST))
+endif
 endif
 
 # Even though we use the autotools-package infrastructure, we have to
