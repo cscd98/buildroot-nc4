@@ -14,6 +14,15 @@ GLIBC_VERSION = fe819f0414e6385206dc8682c20d681ee0eb5998
 #GLIBC_SITE = https://sourceware.org/git/glibc.git
 GLIBC_SITE = $(call github,openlgtv,glibc,$(GLIBC_VERSION))
 
+ifeq ($(BR2_aarch64),y)
+# 2.39 is used in /usr/lib64/libc.so.6 on webOS 11
+# (but /usr/lib64/ld-linux-aarch64.so.1 reports 2.35)
+# keep to 2.35 otherwise apps will segfault (glib 2.39) with that ld-linux
+GLIBC_VERSION = 2.35
+GLIBC_SITE_METHOD = wget
+GLIBC_SITE = https://ftp.gnu.org/gnu/glibc
+endif
+
 GLIBC_LICENSE = GPL-2.0+ (programs), LGPL-2.1+, BSD-3-Clause, MIT (library)
 GLIBC_LICENSE_FILES = COPYING COPYING.LIB LICENSES
 GLIBC_CPE_ID_VENDOR = gnu
@@ -96,8 +105,10 @@ GLIBC_CONF_ENV = \
 
 # Don't use webOS compatibility hacks
 ifeq ($(BR2_PACKAGE_LGTV),y)
+ifeq ($(BR2_arm),y)
 # Ugly hack to modify CC (because CFLAGS isn't used everywhere we need)
 GLIBC_CONF_ENV += CC="$(TARGET_CC) -tno-lgtv-compat"
+endif
 endif
 
 # POSIX shell does not support localization, so remove the corresponding
