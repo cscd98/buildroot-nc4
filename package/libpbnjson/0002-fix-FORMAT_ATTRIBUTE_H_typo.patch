@@ -1,0 +1,14 @@
+diff --git a/include/public/pbnjson/c/compiler/format_attribute.h b/include/public/pbnjson/c/compiler/format_attribute.h
+index 7cb6557..ca67c8f 100644
+--- a/include/public/pbnjson/c/compiler/format_attribute.h
++++ b/include/public/pbnjson/c/compiler/format_attribute.h
+@@ -15,7 +15,7 @@
+ // SPDX-License-Identifier: Apache-2.0
+ 
+ #ifndef FORMAT_ATTRIBUTE_H_
+-#define FORMAT_ATTIRBUTE_H_
++#define FORMAT_ATTRIBUTE_H_
+ 
+ #if __GNUC__
+ #include "gcc/format_attribute.h"
+ 
