@@ -55,6 +55,16 @@ define WAYLAND_TWEAK_WAYLAND_SCANNER_PATH
 endef
 WAYLAND_POST_INSTALL_TARGET_HOOKS += WAYLAND_TWEAK_WAYLAND_SCANNER_PATH
 
+# remove dummy file from webos-userland, fix build error
+define WAYLAND_PRE_INSTALL_FIXUP
+	rm -f $(STAGING_DIR)/usr/lib/libwayland-egl.so
+	rm -f $(TARGET_DIR)/usr/lib/libwayland-egl.so
+endef
+
+ifeq ($(BR2_PACKAGE_WEBOS_USERLAND),y)
+	WAYLAND_PRE_INSTALL_STAGING_HOOKS += WAYLAND_PRE_INSTALL_FIXUP
+endif
+
 $(eval $(meson-package))
 $(eval $(host-meson-package))
 else

@@ -2,6 +2,6 @@ config BR2_PACKAGE_LGTV
 	bool "lgtv"
 	depends on BR2_INSTALL_LIBSTDCPP
 	depends on BR2_TOOLCHAIN_HAS_THREADS
-	select BR2_PACKAGE_GLIBC_POLYFILLS
+	select BR2_PACKAGE_GLIBC_POLYFILLS if BR2_arm
 	help
 	  LGTV meta-package

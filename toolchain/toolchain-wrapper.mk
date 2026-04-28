@@ -37,6 +37,12 @@ TOOLCHAIN_WRAPPER_OPTS += -gno-record-gcc-switches
 endif
 endif
 
+ifeq ($(BR2_PACKAGE_LGTV),y)
+ifeq ($(BR2_aarch64),y)
+TOOLCHAIN_WRAPPER_OPTS += -Wl,--build-id=sha1
+endif
+endif
+
 # Disable -ftree-loop-distribute-patterns on microblaze to
 # workaround a compiler bug with gcc 10 and -O2, -Os or -O3.
 # https://gcc.gnu.org/git/?p=gcc.git;a=commitdiff;h=5879ab5fafedc8f6f9bfe95a4cf8501b0df90edd
