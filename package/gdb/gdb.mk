@@ -235,6 +235,13 @@ endif
 
 ifeq ($(BR2_PACKAGE_LGTV),y)
 GDB_CONF_OPTS += --with-static-standard-libraries
+
+# enable additional arch (for multiarch support)
+ifeq ($(BR2_arm),y)
+GDB_CONF_OPTS += --enable-targets=aarch64-linux-gnu
+else
+GDB_CONF_OPTS += --enable-targets=arm-linux-gnueabi
+endif
 endif
 
 ifeq ($(BR2_PACKAGE_GDB_PYTHON),)
