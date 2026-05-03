@@ -14,4 +14,12 @@ WAYLAND_PROTOCOLS_INSTALL_TARGET = NO
 # needs wayland-scanner
 WAYLAND_PROTOCOLS_DEPENDENCIES = host-wayland
 
+# webOS 26 uses wayland 1.22 with wayland-protocols 1.33, so can use latest
+ifeq ($(shell printf "%s\n" $(BR2_PACKAGE_WAYLAND_VERSION) 1.22.0 | sort -V | head -n1),1.22.0)
+WAYLAND_PROTOCOLS_VERSION = 1.48
+WAYLAND_PROTOCOLS_SITE = https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/$(WAYLAND_PROTOCOLS_VERSION)/downloads
+WAYLAND_PROTOCOLS_CONF_OPTS = -Dtests=false
+$(eval $(meson-package))
+else
 $(eval $(autotools-package))
+endif
