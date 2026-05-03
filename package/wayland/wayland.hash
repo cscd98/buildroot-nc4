@@ -1,6 +1,7 @@
 # From https://lore.freedesktop.org/wayland-devel/plU5smxin5VXbiedTGtL7CNHe0t2mHtgQlQ3-xwREmSSNYaClAcZpEBV8L7JvMT8JHwdD_a_uSFkDUaP45CAWyL545iZh5gInAdToX6hgt4=@emersion.fr/T/#u
 # From https://lists.freedesktop.org/archives/wayland-devel/2016-June/029163.html
 sha256  82892487a01ad67b334eca83b54317a7c86a03a89cfadacfef5211f11a5d0536  wayland-1.24.0.tar.xz
+sha256  1540af1ea698a471c2d8e9d288332c7e0fd360c8f1d12936ebb7e7cbc2425842  wayland-1.22.0.tar.xz
 sha256  9540925f7928becfdf5e3b84c70757f6589bf1ceef09bea78784d8e4772c0db0  wayland-1.11.0.tar.xz
 # From https://lists.freedesktop.org/archives/wayland-devel/2018-April/037767.html
 sha256	eb3fbebb8559d56a80ad3753ec3db800f587329067962dbf65e14488b4b7aeb0	wayland-1.15.0.tar.xz
