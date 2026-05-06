@@ -1,0 +1,86 @@
+name: Build (arm64)
+
+on:
+  push:
+
+permissions:
+  contents: write
+
+env:
+  BR2_CCACHE: y
+  BR2_CCACHE_INITIAL_SETUP: ""
+  BR2_CCACHE_USE_BASEDIR: y
+  FORCE_UNSAFE_CONFIGURE: 1
+
+jobs:
+  build_webos64_sdk:
+    name: Build WebOS64 SDK (host - ${{ matrix.host_arch }})
+    runs-on: ${{ matrix.runs-on }}
+    container:
+      image: gcc:10.4-bullseye
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runs-on: ubuntu-latest
+            host_arch: x86_64
+          - runs-on: ubuntu-24.04-arm
+            host_arch: aarch64
+
+    env:
+      DEFCONFIG: webos64_tv_defconfig
+      SDK_TARGET_ARCH: aarch64
+      SDK_ABI: gnu
+      BR2_CCACHE_DIR: .buildroot-ccache-webos64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Prepare Environment
+        run: |
+          apt-get update -qq
+          apt-get install -y cpio rsync bc
+          make $DEFCONFIG
+        env:
+          BR2_CCACHE_DIR: ${{ runner.temp }}/${{ env.BR2_CCACHE_DIR }}
+
+      - name: Restore dl cache
+        uses: actions/cache@v6
+        with:
+          path: dl
+          key: webos-dl-${{ hashFiles('dl/*') }}
+          restore-keys: |
+            webos-dl-
+
+      - name: Restore ccache
+        uses: actions/cache@v6
+        with:
+          path: ${{ runner.temp }}/${{ env.BR2_CCACHE_DIR }}
+          key: webos-ccache-${{ matrix.host_arch }}
+          restore-keys: |
+            webos-ccache-${{ matrix.host_arch }}-
+
+      - name: Build SDK
+        run: make sdk
+        env:
+          BR2_CCACHE_DIR: ${{ runner.temp }}/${{ env.BR2_CCACHE_DIR }}
+
+      - name: Rename SDK artifact
+        run: |
+          mv output/images/${SDK_TARGET_ARCH}-webos-linux-${SDK_ABI}_sdk-buildroot.tar.gz \
+            output/images/${SDK_TARGET_ARCH}-webos-linux-${SDK_ABI}_sdk-buildroot-${{ matrix.host_arch }}.tar.gz
+
+      - name: Upload SDK Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.SDK_TARGET_ARCH }}-webos-linux-${{ env.SDK_ABI }}_sdk-buildroot-${{ matrix.host_arch }}
+          path: output/images/*_sdk-buildroot*.tar.gz
+
+      - name: Release
+        uses: softprops/action-gh-release@v3
+        if: github.ref_type == 'tag'
+        with:
+          files: |
+            output/images/*_sdk-buildroot*.tar.gz
