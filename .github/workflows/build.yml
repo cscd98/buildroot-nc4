@@ -14,7 +14,7 @@ env:
 
 jobs:
   build_sdk:
-    name: Build ${{ matrix.config.name }} SDK for ${{ matrix.os }}
+    name: Build ${{ matrix.config.name }} SDK (host - ${{ matrix.host_arch }}, target - ${{ matrix.config.TARGET_ARCH }})
     runs-on: ${{ matrix.runs-on }}
     container:
       image: gcc:10.4-bullseye
@@ -34,10 +34,15 @@ jobs:
           - name: WebOS config
             TOOLCHAIN_TARGET: webos
             DEFCONFIG: webos_tv_defconfig
+            TARGET_ARCH: arm
+            ABI: gnueabi
             BR2_CCACHE_DIR: .buildroot-ccache
+
           - name: LGTV config
             TOOLCHAIN_TARGET: lgtv
             DEFCONFIG: lgtv_defconfig
+            TARGET_ARCH: arm
+            ABI: gnueabi
             BR2_CCACHE_DIR: .buildroot-ccache-lgtv
 
     steps:
@@ -76,12 +81,14 @@ jobs:
           BR2_CCACHE_DIR: ${{ runner.temp }}/${{ matrix.config.BR2_CCACHE_DIR }}
 
       - name: Rename SDK artifact
-        run: mv output/images/arm-${{ matrix.config.TOOLCHAIN_TARGET }}-linux-gnueabi_sdk-buildroot.tar.gz output/images/arm-${{ matrix.config.TOOLCHAIN_TARGET }}-linux-gnueabi_sdk-buildroot-${{ matrix.host_arch }}.tar.gz
+        run: |
+          mv output/images/${{ matrix.config.TARGET_ARCH }}-${{ matrix.config.TOOLCHAIN_TARGET }}-linux-${{ matrix.config.ABI }}_sdk-buildroot.tar.gz \
+          output/images/${{ matrix.config.TARGET_ARCH }}-${{ matrix.config.TOOLCHAIN_TARGET }}-linux-${{ matrix.config.ABI }}_sdk-buildroot-${{ matrix.host_arch }}.tar.gz
 
       - name: Upload SDK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: arm-${{ matrix.config.TOOLCHAIN_TARGET }}-linux-gnueabi_sdk-buildroot-${{ matrix.host_arch }}
+          name: ${{ matrix.config.TARGET_ARCH }}-${{ matrix.config.TOOLCHAIN_TARGET }}-linux-${{ matrix.config.ABI }}_sdk-buildroot-${{ matrix.host_arch }}
           path: output/images/*_sdk-buildroot*.tar.gz
 
       - name: Release
