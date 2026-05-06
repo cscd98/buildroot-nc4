@@ -16,9 +16,7 @@ GLIBC_SITE = $(call github,openlgtv,glibc,$(GLIBC_VERSION))
 
 ifeq ($(BR2_aarch64),y)
 # 2.39 is used in /usr/lib64/libc.so.6 on webOS 11
-# (but /usr/lib64/ld-linux-aarch64.so.1 reports 2.35)
-# keep to 2.35 otherwise apps will segfault (glib 2.39) with that ld-linux
-GLIBC_VERSION = 2.35
+GLIBC_VERSION = 2.39
 GLIBC_SITE_METHOD = wget
 GLIBC_SITE = https://ftp.gnu.org/gnu/glibc
 endif

@@ -1,8 +1,6 @@
 # Locally calculated (fetched from git)
 sha256  737e3b2bfee2e3e209e514133f4ff7d2bef0d0dc903fd46b4e2244f6c998f7b2  glibc-2.42-51-gcbf39c26b25801e9bc88499b4fd361ac172d4125-git4.tar.gz
 sha256  e6efd9266bda0fec6191af5bcc56fa8502e981bd0db7d262433b02875680ec8b  glibc-fe819f0414e6385206dc8682c20d681ee0eb5998.tar.gz
-# webOS 11 - ld-linux-aarch64.so.1
-sha256  3e8e0c6195da8dfbd31d77c56fb8d99576fb855fafd47a9e0a895e51fd5942d4  glibc-2.35.tar.gz
 # webOS 11 - libc
 sha256  97f84f3b7588cd54093a6f6389b0c1a81e70d99708d74963a2e3eab7c7dc942d  glibc-2.39.tar.gz
 
