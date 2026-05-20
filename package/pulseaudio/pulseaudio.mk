@@ -189,6 +189,48 @@ else
 PULSEAUDIO_CONF_OPTS += -Dvalgrind=disabled
 endif
 
+ifeq ($(BR2_PACKAGE_TENSORFLOW_LITE),y)
+PULSEAUDIO_DEPENDENCIES += tensorflow-lite
+PULSEAUDIO_CONF_OPTS += -Dcpp_std=c++17
+endif
+
+ifeq ($(BR2_PACKAGE_PULSEAUDIO_WEBOS),y)
+PULSEAUDIO_VERSION = 15.0-26
+PULSEAUDIO_SITE = https://github.com/cscd98/pulseaudio-webos/archive/refs/tags
+PULSEAUDIO_SOURCE = pulseaudio-$(PULSEAUDIO_VERSION).tar.gz
+
+PULSEAUDIO_CONF_OPTS = \
+	-Dhal-compat=false \
+	-Dorc=disabled \
+	-Daccess_group=audio \
+	-Dopenssl=disabled \
+	-Ddatabase=simple \
+	-Dzshcompletiondir=no \
+	-Dudevrulesdir=`pkg-config --variable=udevdir udev`/rules.d \
+	-Dvalgrind=disabled \
+	-Dtests=false \
+	-Drunning-from-build-tree=false \
+	-Dsoxr=disabled \
+	-Dfftw=disabled \
+	-Dadrian-aec=false \
+	-Davahi=disabled \
+	-Dbluez5=disabled \
+	-Ddbus=disabled \
+	-Dgsettings=disabled \
+	-Dgtk=disabled \
+	-Dipv6=false \
+	-Djack=disabled \
+	-Dlirc=disabled \
+	-Dman=false \
+	-Dbluez5-ofono-headset=false \
+	-Dpalm-resampler=true \
+	-Dsystemd=disabled \
+	-Dwebrtc-aec=disabled \
+	-Dx11=disabled
+
+PULSEAUDIO_LDFLAGS = $(TARGET_LDFLAGS) $(TARGET_NLS_LIBS)
+endif
+
 # ConsoleKit module init failure breaks user daemon startup
 define PULSEAUDIO_REMOVE_CONSOLE_KIT
 	rm -f $(TARGET_DIR)/usr/lib/pulse-$(PULSEAUDIO_VERSION)/modules/module-console-kit.so

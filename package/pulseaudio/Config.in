@@ -42,6 +42,9 @@ config BR2_PACKAGE_PULSEAUDIO_DAEMON
 	  recommended way of using PulseAudio unless you are building a
 	  headless system.
 
+config BR2_PACKAGE_PULSEAUDIO_WEBOS
+	bool "WebOS support"
+
 endif
 
 comment "pulseaudio needs a toolchain w/ wchar, threads, dynamic library"
