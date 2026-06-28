@@ -41,7 +41,7 @@ choice
 	  Select the specific U-Boot version you want to use
 
 config BR2_TARGET_UBOOT_LATEST_VERSION
-	bool "2026.01"
+	bool "2026.04"
 
 config BR2_TARGET_UBOOT_CUSTOM_VERSION
 	bool "Custom version"
@@ -85,7 +85,7 @@ endif
 
 config BR2_TARGET_UBOOT_VERSION
 	string
-	default "2026.01"	if BR2_TARGET_UBOOT_LATEST_VERSION
+	default "2026.04"	if BR2_TARGET_UBOOT_LATEST_VERSION
 	default BR2_TARGET_UBOOT_CUSTOM_VERSION_VALUE \
 		if BR2_TARGET_UBOOT_CUSTOM_VERSION
 	default "custom"	if BR2_TARGET_UBOOT_CUSTOM_TARBALL
@@ -314,6 +314,18 @@ config BR2_TARGET_UBOOT_NEEDS_OPTEE_TEE_BIN
 
 	  Binary format must be used for OP-TEE versions since 3.8.0.
 
+config BR2_TARGET_UBOOT_NEEDS_OPTEE_TEE_RAW_BIN
+	bool "tee-raw.bin"
+	help
+	  Raw binary suitable to copy into physical memory where OP-TEE
+	  be can executed from.
+
+	  OP-TEE since 3.21 suggests to use tee-raw.bin instead of (the
+	  still identical) tee-pager_v2.bin.
+
+	  Texas Instrument’s K3 family of SoCs embed tee-raw.bin in
+	  U-Boot (using Binman tool) to support their boot flow.
+
 endchoice
 
 config BR2_TARGET_UBOOT_NEEDS_OPENSBI
@@ -356,7 +368,7 @@ config BR2_TARGET_UBOOT_USE_BINMAN
 	help
 	  Use binman tool for generation and signing of boot images.
 
-	  https://docs.u-boot.org/en/v2026.01/develop/package/binman.html
+	  https://docs.u-boot.org/en/v2026.04/develop/package/binman.html
 
 menu "U-Boot binary format"
 

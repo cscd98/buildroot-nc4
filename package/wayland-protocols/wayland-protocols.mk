@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-#WAYLAND_PROTOCOLS_VERSION = 1.45
+#WAYLAND_PROTOCOLS_VERSION = 1.48
 WAYLAND_PROTOCOLS_VERSION = 1.11
 #WAYLAND_PROTOCOLS_SITE = https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/$(WAYLAND_PROTOCOLS_VERSION)/downloads
 WAYLAND_PROTOCOLS_SITE = http://wayland.freedesktop.org/releases

@@ -48,7 +48,7 @@ KODI_DEPENDENCIES = \
 	libpng \
 	lzo \
 	openssl \
-	pcre \
+	pcre2 \
 	python3 \
 	rapidjson \
 	spdlog \
