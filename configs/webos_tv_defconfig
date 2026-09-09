@@ -1089,6 +1089,7 @@ BR2_PACKAGE_PROVIDES_LIBGLES="webos-userland"
 # BR2_PACKAGE_PSPLASH is not set
 # BR2_PACKAGE_SDL is not set
 BR2_PACKAGE_SDL2=y
+BR2_PACKAGE_SDL3=y
 
 #
 # X11 video driver needs X.org
