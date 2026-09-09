@@ -17,7 +17,7 @@ jobs:
     name: Build ${{ matrix.config.name }} SDK for ${{ matrix.os }}
     runs-on: ${{ matrix.runs-on }}
     container:
-      image: gcc:10.4-bullseye
+      image: gcc:12-bookworm
 
     strategy:
       fail-fast: false
