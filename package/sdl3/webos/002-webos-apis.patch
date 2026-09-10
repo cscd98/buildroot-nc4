@@ -1,0 +1,65 @@
+diff --git a/include/SDL3/SDL.h b/include/SDL3/SDL.h
+index 51848b51b..88d9a2138 100644
+--- a/include/SDL3/SDL.h
++++ b/include/SDL3/SDL.h
+@@ -87,5 +87,6 @@
+ #include <SDL3/SDL_version.h>
+ #include <SDL3/SDL_video.h>
+ #include <SDL3/SDL_oldnames.h>
++#include <SDL3/SDL_webOS.h>
+ 
+ #endif /* SDL_h_ */
+diff --git a/include/SDL3/SDL_webOS.h b/include/SDL3/SDL_webOS.h
+new file mode 100644
+index 000000000..6b6063f29
+--- /dev/null
++++ b/include/SDL3/SDL_webOS.h
+@@ -0,0 +1,48 @@
++/**
++ *  \file SDL_webOS.h
++ *
++ *  Include file for SDL webOS specific APIs.
++ */
++
++#ifndef _SDL_webOS_h
++#define _SDL_webOS_h
++
++#include <SDL3/SDL_stdinc.h>
++#include <SDL3/SDL_rect.h>
++#include <SDL3/SDL_system.h>
++
++#include <SDL3/SDL_begin_code.h>
++
++/* Set up for C function definitions, even when using C++ */
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++#define SDL_HINT_WEBOS_ACCESS_POLICY_KEYS_BACK "SDL_WEBOS_ACCESS_POLICY_KEYS_BACK"
++#define SDL_HINT_WEBOS_ACCESS_POLICY_KEYS_EXIT "SDL_WEBOS_ACCESS_POLICY_KEYS_EXIT"
++#define SDL_HINT_WEBOS_CURSOR_SLEEP_TIME "SDL_WEBOS_CURSOR_SLEEP_TIME"
++
++#define SDL_WEBOS_SCANCODE_CH_UP 480
++#define SDL_WEBOS_SCANCODE_CH_DOWN 481
++#define SDL_WEBOS_SCANCODE_BACK 482
++#define SDL_WEBOS_SCANCODE_CURSOR_SHOW 484
++#define SDL_WEBOS_SCANCODE_CURSOR_HIDE 485
++#define SDL_WEBOS_SCANCODE_RED 486
++#define SDL_WEBOS_SCANCODE_GREEN 487
++#define SDL_WEBOS_SCANCODE_YELLOW 488
++#define SDL_WEBOS_SCANCODE_BLUE 489
++#define SDL_WEBOS_SCANCODE_EXIT 505
++
++#define SDL_WEBOS_EXPORED_WINDOW_TYPE_VIDEO 0
++#define SDL_WEBOS_EXPORED_WINDOW_TYPE_SUBTITLE 1
++#define SDL_WEBOS_EXPORED_WINDOW_TYPE_TRANSPARENT 2
++#define SDL_WEBOS_EXPORED_WINDOW_TYPE_OPAQUE 3
++
++/* Ends C function definitions when using C++ */
++#ifdef __cplusplus
++}
++#endif
++
++#include <SDL3/SDL_close_code.h>
++
++#endif /* _SDL_webOS_h */

@@ -30,6 +30,14 @@ SDL3_CONF_OPTS = \
 	-DSDL_VIVANTE=OFF \
 	-DSDL_VULKAN=OFF
 
+define SDL3_APPLY_WEBOS_PATCHES
+	$(APPLY_PATCHES) $(@D) package/sdl3/webos \*.patch
+endef
+
+ifeq ($(BR2_PACKAGE_SDL3_WEBOS),y)
+SDL3_POST_PATCH_HOOKS += SDL3_APPLY_WEBOS_PATCHES
+endif
+
 # SDL3 fails to build in Thumb mode on some ARM architectures
 ifeq ($(BR2_ARM_INSTRUCTIONS_THUMB),y)
 SDL3_CONF_ENV += CFLAGS="$(TARGET_CFLAGS) -marm"
